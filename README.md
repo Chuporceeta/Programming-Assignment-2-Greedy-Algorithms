@@ -61,32 +61,39 @@ The output will be written to either an output file or the terminal, depending o
 
 ## Question 1
 
-| Input | k  | m   | FIFO | LRU | OPTFF |
-| ----- |----| --- |------|-----| ----- |
-| test0 | 3  | 50  | 42   | 42  | 31    |
-| test1 | 5  | 100 | 49   | 48  | 29    |
-| test2 | 10 | 200 | 149  | 145 | 78    |
-
+| Input | k   | m   | FIFO | LRU | OPTFF |
+| ----- | --- | --- | ---- | --- | ----- |
+| test0 | 3   | 50  | 42   | 42  | 31    |
+| test1 | 5   | 100 | 49   | 48  | 29    |
+| test2 | 10  | 200 | 149  | 145 | 78    |
 
 #### Does OPTFF have the fewest misses?
+
 OPTFF always has the fewest misses by a significant margin.
 
 #### How does FIFO compare to LRU?
-FIFO and LRU are very comparable and typically have very close numbers. 
+
+FIFO and LRU are very comparable and typically have very close numbers.
 In test0 and test2 I used completely randomly generated numbers, in which case LRU and FIFO give very similar numbers.
-In test1 I inserted the number 10 more frequently to simulate the same data being accessed over and over. 
+In test1 I inserted the number 10 more frequently to simulate the same data being accessed over and over.
 In scenarios with data frequently reaccessed (not in succession) LRU tends to perform better but with completely random requests they work in about the same time.
 
 ## Question 2
+
 #### For ( k = 3 ), investigate whether there exists a request sequence for which OPTFF incurs strictly fewer misses than FIFO.
 
 1 2 3 4 2 1
+
 FIFO misses: 5
+
 OPTFF misses: 4
 
 #### In either case, briefly explain your reasoning.
-There does exist a sequence where OPTFF has fewer misses than FIFO for (k=3).
+
+There does exist a sequence where OPTFF has fewer misses than FIFO for k=3.
+
 OPTFF ejects the item in the cache that is accessed again the farthest in the future. It minimizes cache misses by ensuring the only elements ejected from the cache are not used until much later.
+
 FIFO on the other hand only holds recently accessed data. So though it is good for accessing data over and over again, it does not have the foresight that OPTFF has that makes OPTFF so efficient in most scenarios.
 
 ## Question 3
@@ -114,4 +121,4 @@ Case 2: $r_{j+1}$ is not in the cache.
 
   In either case, $S'$ brings in as many items as $S_A$ and ends up with the same cache afterwards. We know that $b$ will never be requested before $a$ because $b$ was selected by $S_{FF}$.
 
-By induction on $j$, $S'$=$S_{FF}$ and $S'$ does not bring in more items than $\bar S_A$. Therefore, $S_{FF}$ does not bring in more items than $S_A$, so Belady's Farthest-in-Future algorithm cache misses no more times than $A$.
+By induction on $j$, $S'=S_{FF}$ and $S'$ does not bring in more items than $\bar S_A$. Therefore, $S_{FF}$ does not bring in more items than $S_A$, so Belady's Farthest-in-Future algorithm cache misses no more times than $A$.
