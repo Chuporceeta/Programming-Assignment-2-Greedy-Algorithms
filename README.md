@@ -90,3 +90,28 @@ OPTFF ejects the item in the cache that is accessed again the farthest in the fu
 FIFO on the other hand only holds recently accessed data. So though it is good for accessing data over and over again, it does not have the foresight that OPTFF has that makes OPTFF so efficient in most scenarios.
 
 ## Question 3
+
+Let $A$ be any offline algorithm that knows the full request sequence.
+
+Let $R=\{r_1, r_2, ... r_m\}$ be a sequence of cache requests.
+
+Let $S_A$ be the eviction schedule produced from running $A$ on $R$, and let $S_{FF}$ be the eviction schedule produced from running Belady’s Farthest-in-Future algorithm on $R$.
+
+Since Belady's algorithm does not bring items into the cache unless there is a cache miss, $S_{FF}$ is a reduced schedule. We can transform $S_A$ into a reduced schedule $\bar S_A$ that brings in at most the same amount of items as $S_A$: whenever $S_A$ brings in an item $d$ on step $i$ that was not requested, $\bar S_A$ does nothing on step $i$ and only brings $d$ in on a later step $j$ when it is requested. The cost of bringing in $d$ on step $i$ is then just moved to step $j$, or eliminated outright if $d$ is never requested.
+
+Let $j$ be any integer such that $\bar S_A$ and $S_{FF}$ agree on the first $j$ requests. Thus the state of the cache is the same for both algorithms when processing request $r_{j+1}$.
+
+We will construct a schedule $S'$ that agrees with $S_{FF}$ on the first $j+1$ requests without bringing in more items than $\bar S_A$ overall.
+
+Case 1: $r_{j+1}$ is in the cache. Then neither schedule evicts (because they are reduced), so let $S'$ = $\bar S_A$.
+
+Case 2: $r_{j+1}$ is not in the cache.
+
+- Case 2a: $\bar S_A$ and $S_{FF}$ evict the same item. Then let $S'$ = $\bar S_A$.
+- Case 2b: $\bar S_A$ evicts some item $a$ while $S_{FF}$ evicts some item $b$, $a \neq b$. Then let $S'$ agree with $S_{FF}$ for the first $j+1$ requests. For the remaining requests, let $S'$ agree with $\bar S_A$ unless:
+  - $c \neq b$ is requested and $\bar S_A$ would evict $b$: Then $S'$ evicts $a$.
+  - $a$ is requested and $\bar S_A$ would evict $c$: If $c \neq b$, then $S'$ evicts $c$ and brings in $b$.
+
+  In either case, $S'$ brings in as many items as $S_A$ and ends up with the same cache afterwards. We know that $b$ will never be requested before $a$ because $b$ was selected by $S_{FF}$.
+
+By induction on $j$, $S'$=$S_{FF}$ and $S'$ does not bring in more items than $\bar S_A$. Therefore, $S_{FF}$ does not bring in more items than $S_A$, so Belady's Farthest-in-Future algorithm cache misses no more times than $A$.
