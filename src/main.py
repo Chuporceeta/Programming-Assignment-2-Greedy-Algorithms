@@ -33,8 +33,8 @@ def LRU(k, requests):
             cache[request] = 1
 
             if len(cache) > k:
-                min = cache.values()[0]
-                min_key = cache.keys()[0]
+                min = list(cache.values())[0]
+                min_key = list(cache.keys())[0]
                 for element in cache.keys():
                     if cache[element] < min:
                         min_key = element
