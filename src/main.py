@@ -6,10 +6,8 @@ def FIFO(k, requests):
     cache = []
     for i in range(len(requests)):
         hit = False
-        for j in range(len(cache)):
-            if cache[j] == requests[i]:
-                hit = True
-                break
+        if requests[i] in cache:
+            hit = True
         if not hit:
             misses += 1
             cache.append(requests[i])
@@ -21,16 +19,18 @@ def FIFO(k, requests):
 def LRU(k, requests):
     # k = cache size
     misses = 0
+
     cache = {}
+    timer = 0
     for request in requests:
         hit = False
         if request in cache:
             hit = True
-            cache[request] += 1
+            cache[request] = timer
 
         if not hit:
             misses += 1
-            cache[request] = 1
+            cache[request] = timer
 
             if len(cache) > k:
                 min = list(cache.values())[0]
@@ -40,6 +40,9 @@ def LRU(k, requests):
                         min_key = element
                         min = cache[element]
                 cache.pop(min_key)
+
+        timer += 1
+
 
 
     return misses

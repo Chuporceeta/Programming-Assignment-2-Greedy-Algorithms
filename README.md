@@ -62,10 +62,10 @@ The output will be written to either an output file or the terminal, depending o
 ## Question 1
 
 | Input | k  | m   | FIFO | LRU | OPTFF |
-| ----- |----| --- | ---- | --- | ----- |
+| ----- |----| --- |------|-----| ----- |
 | test0 | 3  | 50  | 42   | 42  | 31    |
-| test1 | 5  | 100 | 74   | 68  | 29    |
-| test2 | 10 | 200 | 149  | 142 | 78    |
+| test1 | 5  | 100 | 49   | 48  | 29    |
+| test2 | 10 | 200 | 149  | 145 | 78    |
 
 
 #### Does OPTFF have the fewest misses?
@@ -75,7 +75,7 @@ OPTFF always has the fewest misses by a significant margin.
 FIFO and LRU are very comparable and typically have very close numbers. 
 In test0 and test2 I used completely randomly generated numbers, in which case LRU and FIFO give very similar numbers.
 In test1 I inserted the number 10 more frequently to simulate the same data being accessed over and over. 
-In scenarios with data frequently reaccessed not in succession LRU tends to perform better but with completely random requests they work in about the same time.
+In scenarios with data frequently reaccessed (not in succession) LRU tends to perform better but with completely random requests they work in about the same time.
 
 ## Question 2
 #### For ( k = 3 ), investigate whether there exists a request sequence for which OPTFF incurs strictly fewer misses than FIFO.
