@@ -77,7 +77,16 @@ In test0 and test2 I used completely randomly generated numbers, in which case L
 In test1 I inserted the number 10 more frequently to simulate the same data being accessed over and over. 
 In scenarios with data frequently reaccessed not in succession LRU tends to perform better but with completely random requests they work in about the same time.
 
-
 ## Question 2
+#### For ( k = 3 ), investigate whether there exists a request sequence for which OPTFF incurs strictly fewer misses than FIFO.
+
+1 2 3 4 2 1
+FIFO misses: 5
+OPTFF misses: 4
+
+#### In either case, briefly explain your reasoning.
+There does exist a sequence where OPTFF has fewer misses than FIFO for (k=3).
+OPTFF ejects the item in the cache that is accessed again the farthest in the future. It minimizes cache misses by ensuring the only elements ejected from the cache are not used until much later.
+FIFO on the other hand only holds recently accessed data. So though it is good for accessing data over and over again, it does not have the foresight that OPTFF has that makes OPTFF so efficient in most scenarios.
 
 ## Question 3
