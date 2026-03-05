@@ -39,8 +39,8 @@ def LRU(k, requests):
                     if cache[element] < min:
                         min_key = element
                         min = cache[element]
-
                 cache.pop(min_key)
+
 
     return misses
 
