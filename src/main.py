@@ -8,7 +8,25 @@ def LRU(k, requests):
     return 0
 
 def OPTFF(k, requests):
-    return 0
+    num_misses = 0
+    cache = set()
+
+    for i, request in enumerate(requests):
+        if request not in cache:
+            num_misses += 1
+            if len(cache) == k:
+                eviction_candidates = cache.copy()
+                for req in requests[i+1:]:
+                    if len(eviction_candidates) == 1:
+                        break
+                    if req in eviction_candidates:
+                        eviction_candidates.remove(req)
+                for victim in eviction_candidates:
+                    cache.remove(victim)
+                    break
+            cache.add(request)
+
+    return num_misses
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
