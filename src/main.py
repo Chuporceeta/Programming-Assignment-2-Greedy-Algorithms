@@ -47,6 +47,13 @@ if __name__ == '__main__':
 
         assert k >= 1, "Error: cache size must be at least 1"
 
-    print("FIFO:", FIFO(k, requests))
-    print("LRU:", LRU(k, requests))
-    print("OPTFF:", OPTFF(k, requests))
+
+    output = (f'FIFO  : {FIFO(k, requests)}\n'
+              f'LRU   : {LRU(k, requests)}\n'
+              f'OPTFF : {OPTFF(k, requests)}')
+    if output_file is not None:
+        assert os.path.exists(input_file), "Input file does not exist"
+        with open(output_file, 'w') as f:
+            f.write(output)
+    else:
+        print(output)
