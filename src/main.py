@@ -2,9 +2,26 @@ import os
 import argparse
 
 def FIFO(k, requests):
-    return 0
+    misses = 0
+    cache = []
+    hit = False
+    for i in range(len(requests)):
+        hit = False
+        for j in range(len(cache)):
+            if cache[j] == requests[i]:
+                hit = True
+                break
+        if not hit:
+            misses += 1
+            cache.append(requests[i])
+            if len(cache) > k:
+                cache.pop(0)
+
+    return misses
 
 def LRU(k, requests):
+    # k = cache size
+
     return 0
 
 def OPTFF(k, requests):
